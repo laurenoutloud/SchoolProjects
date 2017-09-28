@@ -4,6 +4,9 @@
 
 using namespace std;
 
+/* Note: I created these classes and functions based on the assignment requirements*/
+
+
 //Global variable to create AccountIDs
 int id = 1;
 
@@ -13,7 +16,10 @@ class CustomerInterface {
 public:
   int AccountID;
   string CustomerEmail;
-  void request(); //fuction that submits an order request
+  void request(){ //fuction that submits an order request
+    cout << "We made it. \n";
+
+  };
   void createAccRequestOrder();
   void requestOrderWithNewCardNo();
   void cancel(); //function that cancels current request
@@ -24,15 +30,32 @@ public:
 //BankInterface class <<interface>>
 class BankInterface {
 public:
-  void authorize(); //function that checks if customer credit card is valid
+  bool authorize(int cardNo) //function that checks if customer credit card is valid
+  {
+    int bankerInput;
+    cout <<"***BANK***\n" //You are acting as a bank actor in this function so BANK title is used
+      "The credit card number of the customer is: " <<
+      cardNo << ". " << "Do you wish to authorize this transaction?\n"
+      "Enter 1 for yes or any other character for no.\n";
 
+      cin >> bankerInput; //decide whether or not to authorize credit card
+
+      if (bankerInput == 1){
+        return true;
+      } else {
+        return false;
+      }
+
+
+  }
 };
 
 //EmailServerInterface class <<interface>>
 class EmailServerInterface{
 public:
-  void emailConfirmation(); //function that displays an email confirmation
+  bool emailConfirmation(){ //function that displays an email confirmation
 
+  };
 };
 
 
@@ -189,7 +212,7 @@ void viewAccountInfo(vector<CustomerAccount> accountArray){ //takes list of all 
     }
 
   }
-
+  cout <<"The Acount ID that you entered does not exist.\n";
   return;
 }
 
@@ -197,6 +220,48 @@ CustomerAccount createCustomerAccount(){ //function that creates a new account
   CustomerAccount customer; //create new instance of CustomerAccount object
   customer.CreateAccount(); //call object's CreateAccount function to get user information
   return customer; //return new CustomerAccount object
+}
+
+//function that submits an order request
+void submitOrderRequest(int *cart, vector<CustomerAccount> accountArray){
+  PurchaseOrderManager orderManager; //create instance of PurchaseOrderManager
+  BankInterface bank;
+  bool accountExists = false; //verification for whether or not an account exists
+  CustomerAccount customer;
+  int selectedOption, id; //variables that reciev input from customer
+
+  cout << "***CUSTOMER***\n" //get Account ID from user
+    "Please enter your account ID:\n";
+    cin >> id;
+
+    //check if account exists
+    for (int i = 0; i < accountArray.size(); i++){
+      if (accountArray[i].AccountID == id){
+        accountExists = true;
+        customer = accountArray[i];
+      }
+    }
+    if (accountExists == false){
+      cout << "The Account ID you have entered cannot be found."
+        "Please return to the main menu and create an account.\n";
+        return;
+    }
+
+    if(bank.authorize(customer.CardNo) == false){ //If bank did not authorize credit card
+      cout << "***CUSTOMER***\n" //Ask customer to update credit card information or return to main menu
+        "Your credit card has been denied. Press 1 to update your credit"
+        "card information or any other character to quit.\n";
+
+      cin >> selectedOption; //get input from customer
+      if (selectedOption == 1){
+        customer.UpdateCardNo();
+
+      } else{ return;};
+
+    }
+
+    orderManager.request();
+    return;
 }
 
 
@@ -227,7 +292,7 @@ int main(){
         viewAccountInfo(accounts);
         break;
       case 4:
-        
+        submitOrderRequest(ptr, accounts);
         break;
       case 5: //exit the program
         cout << "Thank you for visiting Raider Backpack's Online store. Please come again!\n";

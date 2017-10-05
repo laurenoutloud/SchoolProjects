@@ -17,7 +17,7 @@ public:
   int AccountID;
   string CustomerEmail;
   void request(){ //fuction that submits an order request
-    cout << "We made it. \n";
+    cout << "Your order has been sumbitted. \n";
 
   };
   void createAccRequestOrder();
@@ -53,8 +53,9 @@ public:
 //EmailServerInterface class <<interface>>
 class EmailServerInterface{
 public:
-  bool emailConfirmation(){ //function that displays an email confirmation
-
+  void emailConfirmation(string email){ //function that displays an email confirmation
+    cout << "Thank you for placing an order with Online Raider Backpacks! \nA confirmation email"
+      "has been sent to " << email <<" . We will now return you to the main menu.\n ";
   };
 };
 
@@ -128,7 +129,7 @@ void catalogMenu(int *ptr){
   //display catalog
   cout <<
   "***CUSTOMER***\n" //Indicates this is customer user interface
-  "Please select an item from our catalog to add to your cart:\n"
+  "Please select an item from our catalog to add to your cart (all backpacks are $25):\n"
   "1. Red Backpack\n"
   "2. White Backpack\n"
   "3. Black Backpack\n"
@@ -222,47 +223,86 @@ CustomerAccount createCustomerAccount(){ //function that creates a new account
   return customer; //return new CustomerAccount object
 }
 
+
+
+bool cartIsEmpty(int *cart){ //function that checks to see if your cart is empty
+
+  for (int i = 0; i < 3; i++){
+    if (cart[i] != 0){
+      return false; //if cart is not empty return false
+    }
+
+  }
+  return true; //if cart is empty return true
+
+}
+
+
+
+
 //function that submits an order request
-void submitOrderRequest(int *cart, vector<CustomerAccount> accountArray){
+void submitOrderRequest(int *cart, vector<CustomerAccount>* accountArray){
   PurchaseOrderManager orderManager; //create instance of PurchaseOrderManager
-  BankInterface bank;
+  BankInterface bank; //bank object
+  int totalPrice = (cart[0]+cart[1]+cart[2])*25;
   bool accountExists = false; //verification for whether or not an account exists
   CustomerAccount customer;
   int selectedOption, id; //variables that reciev input from customer
+  int currentIdIndex = 0; //variable to store index of current customer
+  EmailServerInterface emailServer;
+  //check to see if cart is empty. If empty, return to main menu and instruct customer to select item from catalog
+  if (cartIsEmpty(cart) == true){
+    cout << "Your cart appears to be empty.\n Please go to the catalog and add items to"
+      " your cart before submitting an order request.\n";
+      return;
+  }
 
   cout << "***CUSTOMER***\n" //get Account ID from user
     "Please enter your account ID:\n";
     cin >> id;
 
+
     //check if account exists
-    for (int i = 0; i < accountArray.size(); i++){
-      if (accountArray[i].AccountID == id){
+    for (int i = 0; i < (*accountArray).size(); i++){
+      if ((*accountArray)[i].AccountID == id){
         accountExists = true;
-        customer = accountArray[i];
+        customer = (*accountArray)[i];
+        currentIdIndex = i; //store index in accountArray of customer so we can update credit card if needed
       }
     }
-    if (accountExists == false){
+    if (accountExists == false){ //if ID is not found then return to main menu
       cout << "The Account ID you have entered cannot be found."
         "Please return to the main menu and create an account.\n";
         return;
     }
 
-    if(bank.authorize(customer.CardNo) == false){ //If bank did not authorize credit card
+    while(bank.authorize(customer.CardNo) == false){ //If bank did not authorize credit card
       cout << "***CUSTOMER***\n" //Ask customer to update credit card information or return to main menu
         "Your credit card has been denied. Press 1 to update your credit"
         "card information or any other character to quit.\n";
 
       cin >> selectedOption; //get input from customer
       if (selectedOption == 1){
-        customer.UpdateCardNo();
-
+        customer.UpdateCardNo(); //call member function that updates credit card
+        (*accountArray)[currentIdIndex] = customer; //replace old customer with customer with updated credit card
       } else{ return;};
 
     }
 
+    cout << "You are placing an order of " << cart[0] << " red backpack(s), " << cart[1] <<
+    " white backpack(s), and " << cart[2] << " backpack(s) "
+      "for a total of $" << totalPrice <<". Do you wish to"
+      "continue? (Enter 1 for yes and any other character for no.)\n";
+      cin >> selectedOption;
+      if (selectedOption != 1){
+        return;
+      }
+
     orderManager.request();
+    emailServer.emailConfirmation(customer.CustomerEmail);
     return;
 }
+
 
 
 int main(){
@@ -274,7 +314,10 @@ int main(){
   //index 0 holds the number of red backpacks, 1 white backpacks and 2 black
   int *ptr = customerCart; //create pointer that points to customerCart
 
-  PurchaseOrderManager orderManager;
+  vector<CustomerAccount> *vecptr;
+  vecptr = &accounts;
+
+  PurchaseOrderManager orderManager; //create PurchaseOrderManager object
 
   while (selectedOption != 5){
 
@@ -287,12 +330,16 @@ int main(){
       case 2:
         //calls createCustomerAccount function and stores new CustomerAccount object in accounts
         accounts.push_back(createCustomerAccount());
+
+
         break;
       case 3:
         viewAccountInfo(accounts);
         break;
       case 4:
-        submitOrderRequest(ptr, accounts);
+        submitOrderRequest(ptr, vecptr);
+
+
         break;
       case 5: //exit the program
         cout << "Thank you for visiting Raider Backpack's Online store. Please come again!\n";

@@ -11,11 +11,48 @@ using namespace std;
 int id = 1;
 
 
+//CustomerAccount class <<entity>>
+//Inherits from CustomerInterface class
+class CustomerAccount {
+public:
+  //AccountID is inherited from CustomerInterface class
+  int AccountID;
+  string CustomerEmail;
+  int CardNo; //customer's credit card number
+  //email is inherited from CustomerInterface
+
+  void ReadAccountInfo(){ //function that displays customer information
+    cout <<
+      "***CUSTOMER***\n"
+      "Account Id Number: " << AccountID << " " << endl <<
+      "Email Address: " <<CustomerEmail << " " << endl <<
+      "Credit Card Number: " << CardNo << endl;
+
+  };
+  void CreateAccount(){//function that creates a new account
+
+    cout << "***CUSTOMER***\n"; //indicates that this is done by customer actor
+    AccountID = id; //generate new id from global variable
+    id += id; //increment id variable for next user
+    cout << "Please enter your email address:\n"; //get email address from customer
+    cin >> CustomerEmail;
+    cout << "Please enter your credit card number:\n"; //get credit card number from customer
+    cin >> CardNo;
+
+  };
+  void UpdateCardNo(){ //function that updates a users credit card
+    cout <<
+    "***CUSTOMER***\n"
+    "Please enter a new credit card number: ";
+    cin >> CardNo;
+  };
+};
 //CustomerInterface class <<interface>>
 class CustomerInterface {
 public:
   int AccountID;
   string CustomerEmail;
+  CustomerAccount account;
   void request(){ //fuction that submits an order request
     cout << "Your order has been sumbitted. \n";
 
@@ -60,40 +97,6 @@ public:
 };
 
 
-//CustomerAccount class <<entity>>
-//Inherits from CustomerInterface class
-class CustomerAccount: public CustomerInterface {
-public:
-  //AccountID is inherited from CustomerInterface class
-  int CardNo; //customer's credit card number
-  //email is inherited from CustomerInterface
-
-  void ReadAccountInfo(){ //function that displays customer information
-    cout <<
-      "***CUSTOMER***\n"
-      "Account Id Number: " << AccountID << " " << endl <<
-      "Email Address: " <<CustomerEmail << " " << endl <<
-      "Credit Card Number: " << CardNo << endl;
-
-  };
-  void CreateAccount(){//function that creates a new account
-
-    cout << "***CUSTOMER***\n"; //indicates that this is done by customer actor
-    AccountID = id; //generate new id from global variable
-    id += id; //increment id variable for next user
-    cout << "Please enter your email address:\n"; //get email address from customer
-    cin >> CustomerEmail;
-    cout << "Please enter your credit card number:\n"; //get credit card number from customer
-    cin >> CardNo;
-
-  };
-  void UpdateCardNo(){ //function that updates a users credit card
-    cout <<
-    "***CUSTOMER***\n"
-    "Please enter a new credit card number: ";
-    cin >> CardNo;
-  };
-};
 
 //DeliveryOrder class <<entity>>
 class DeliveryOrder {

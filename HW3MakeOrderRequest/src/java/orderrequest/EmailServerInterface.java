@@ -10,5 +10,5 @@ package orderrequest;
  * @author Lauren
  */
 public class EmailServerInterface {
-    
+    public void emailConfirmation(String custEmail){}
 }

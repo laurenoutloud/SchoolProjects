@@ -14,13 +14,24 @@ import java.sql.*;
 import java.math.*;
 
 public class ConnectionProvider {
-    private static Connection con = null;
+    //private static Connection con = null;
     
     public static Connection getCon(){
+        Connection con = null;
         try{
-            con= DriverManager.getConnection("jdbd:mysql://localhost:3306/obs?" + "user=root&password=admin");
+           Class.forName("*com.mysql.jdbc.driver");
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/make_order_request","root","admin");
+           if (con==null){
+               System.out.println("connection failed");
+            }
+           else{
+                    System.out.println("connection success");
+
+           }
         }
-        catch(Exception e){}
+        catch(Exception e){
+        e.printStackTrace();
+        }
         return con;
     }
 }

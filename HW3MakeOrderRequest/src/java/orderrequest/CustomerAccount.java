@@ -29,7 +29,7 @@ public class CustomerAccount {
         return "Nope";
     }
     //store customer information and create account
-    public String createAccount(String acctId, String pass, String cardNo, String email) {
+    public void createAccount(String acctId, String pass, String cardNo, String email) {
         accountId = acctId;
         password = pass;
         cardNumber = cardNo;
@@ -51,11 +51,11 @@ public class CustomerAccount {
 
             ps.executeUpdate();
 
-            return email;
+            return;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "failed";
+            
         }
 
     }
@@ -75,8 +75,7 @@ public class CustomerAccount {
       
             
             ps.executeUpdate();
-            //Create order request and return order confirmation
-            
+           
             
       }
         

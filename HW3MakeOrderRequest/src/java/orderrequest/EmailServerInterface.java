@@ -10,5 +10,11 @@ package orderrequest;
  * @author Lauren
  */
 public class EmailServerInterface {
-    public void emailConfirmation(String custEmail){}
+    String email;
+    public void emailConfirmation(String custEmail){
+       
+        email = custEmail;
+        //Email server logic not part of Make Order Request use case
+    
+    }
 }

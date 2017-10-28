@@ -28,7 +28,7 @@ public class DeliveryOrder {
         confirmation = "Account Id: " + accountId + "<br>" +
                         "Item: " + item + "<br>" +
                         "Quantity: " + quantity + "<br>" +
-                        "TotalPrice: " + totalPrice + "<br>" +
+                        "Total Price: $" + totalPrice + ".00 <br>" +
                         "Authorization Number: " + authorizationNumber + "<br>";
         
          try{

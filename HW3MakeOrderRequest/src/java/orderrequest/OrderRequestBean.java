@@ -14,7 +14,7 @@ public class OrderRequestBean {
   private String password;
   private String item;
   private String quantity;
-  private String totalPrice = "25";
+  private String totalPrice;
   private String email;
   private String cardNumber;
   private String authorized;
@@ -25,7 +25,7 @@ public class OrderRequestBean {
   public void setPassword(String s){password = s;}
   public void setItem(String s){item = s;}
   public void setQuantity(String s){quantity = s;}
-  public void setTotalPrice(String s){quantity = s;}
+    public void setTotalPrice(String s){totalPrice = s;}
   public void setEmail(String s){email = s;}
   public void setCardNumber(String s){cardNumber = s;}
   public void setAuthorized(String s){authorized = s;}

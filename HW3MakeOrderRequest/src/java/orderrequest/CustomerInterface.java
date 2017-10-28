@@ -12,14 +12,7 @@ import java.sql.*;
  */
 public class CustomerInterface {
   private PurchaseOrderManager manager = new PurchaseOrderManager(); 
-  
-  private String accountId;
-  private String password;
-  private String item;
-  private String quantity;
-  private String totalPrice;
-  private String email;
-  private Connection con;
+ 
    
   
 
@@ -98,15 +91,19 @@ public class CustomerInterface {
       
       
   }
-  public int getCreditCardNumber(){
+  public String getCreditCardNumber(){
       return manager.getCreditCardNumber();
   }
 
-  public void createAccountRequestOrder(String accountId, String password, String item, String quantity, String totalPrice){
-      manager.createAccRequestOrder(accountId, password, item, quantity, totalPrice);
+  public String createAccountRequestOrder(String accountId, String password, String cardNo, String email, String item, String quantity, String totalPrice){
+      
+      return manager.createAccRequestOrder(accountId, password, cardNo, email, item, quantity, totalPrice);
       
     
   }
-  public void requestOrderWithNewCardNo(String accountId, String password, String item, int quantity, int totalPrice, int cardNo){}
+  public String requestOrderWithNewCardNo(String accountId, String password, String cardNo, String email, String item, String quantity, String totalPrice){
+      
+      return manager.requestOrderWithNewCard(accountId, password, cardNo, email, item, quantity, totalPrice);
+  }
   public void cancel(){}
 }

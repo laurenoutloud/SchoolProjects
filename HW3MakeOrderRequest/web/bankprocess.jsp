@@ -15,10 +15,7 @@
     <body>
         <h1>Bank Process</h1>
         <jsp:setProperty name="orderrequest" property="*"/>
-       <%
-            
-            out.println(orderrequest.getAuthorized());
-        %>
+      
         <%
            
             if(orderrequest.getAuthorized().equals("yes")){

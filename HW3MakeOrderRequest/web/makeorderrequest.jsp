@@ -20,29 +20,35 @@
   
         <%
             CustomerInterface customerInt = new CustomerInterface();
-          
+            String confirmation;
             
+            orderrequest.setTotalPrice(orderrequest.getQuantity());
             
             switch(orderrequest.getRequestType()){
                 
                 case 1: {out.println("Made it to case 1");
-                        String confirmation;
+                        
                         confirmation = customerInt.request(orderrequest.getAccountId(), orderrequest.getPassword(), orderrequest.getItem(), orderrequest.getQuantity(), orderrequest.getTotalPrice());
                         orderrequest.setConfirmation(confirmation);
-                        String email = customerInt.getEmail(orderrequest.getAccountId(), orderrequest.getPassword());
-                        orderrequest.setEmail(email);
-                        response.sendRedirect("emailconfirmation.jsp");}
-                        break;
-                case 2: out.println("Made it to case 2");
+                       
                         response.sendRedirect("emailconfirmation.jsp");
-                        break;
-                case 3: out.println("Made it to case 3");
-                        response.sendRedirect("emailconfirmation.jsp");
-                        break;
-                case 4: out.println("Made it to case 4");
-                        response.sendRedirect("index.jsp");
-                        break;
+                        break;}
+                case 2: {out.println("Made it to case 2");
+                        
+                        confirmation = customerInt.requestOrderWithNewCardNo(orderrequest.getAccountId(), orderrequest.getPassword(), orderrequest.getCardNumber(), orderrequest.getEmail(), orderrequest.getItem(), orderrequest.getQuantity(), orderrequest.getTotalPrice());
+                        orderrequest.setConfirmation(confirmation);
                 
+                        response.sendRedirect("emailconfirmation.jsp");
+                        break;}
+                        
+                case 3: {out.println("Made it to case 3");
+                        
+                        confirmation = customerInt.createAccountRequestOrder(orderrequest.getAccountId(), orderrequest.getPassword(),  orderrequest.getCardNumber(), orderrequest.getEmail(),orderrequest.getItem(), orderrequest.getQuantity(), orderrequest.getTotalPrice());
+                        orderrequest.setConfirmation(confirmation);
+                        response.sendRedirect("emailconfirmation.jsp");
+                        
+                        break;}
+               
             }
         
         

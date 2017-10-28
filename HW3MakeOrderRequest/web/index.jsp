@@ -20,7 +20,7 @@
     
         <ul>
             <li><a href="catalog.jsp">Browse Catalog</a></li>
-            <li><a href="createaccount.jsp">Create Account</a></li>
+           
             <li><a href="quit.jsp">Quit</a></li>
  
         </ul>

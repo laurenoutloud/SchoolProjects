@@ -41,20 +41,5 @@
         
         
         
-        <%--
-        <form>
-            <input type ="text" name="id">
-            <input type="Submit" value ="Submit"/>
-        </form>
-        
-        
-        
-        <jsp:useBean id = "customer" class = "orderrequest.CustomerAccount" />
-        <jsp:setProperty name = "customer" property = "accountId" value = '<%= request.getParameter("id") %>' />
-        Your Account Id is: 
-        <jsp:getProperty name = "customer" property = "accountId"/>
-        --%>
-        
-        
     </body>
 </html>

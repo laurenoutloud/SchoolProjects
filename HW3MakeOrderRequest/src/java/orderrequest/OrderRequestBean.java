@@ -9,6 +9,8 @@ package orderrequest;
  *
  * @author Lauren
  */
+
+//java bean class just stores values of needed variables and has getters/setters to set and retrieve the values
 public class OrderRequestBean {
   private String accountId;
   private String password;
@@ -17,8 +19,8 @@ public class OrderRequestBean {
   private String totalPrice;
   private String email;
   private String cardNumber;
-  private String authorized;
-  private int requestType;
+  private String authorized; //Whether or not bank authorized credit card; 'yes' for yes, 'no' for no
+  private int requestType; //Type 1 is request order, Type 2 is create account request order Type 3, is update credit card request order
   private String confirmation;
   
   public void setAccountId(String s){accountId = s;}
@@ -39,7 +41,7 @@ public class OrderRequestBean {
   public String getTotalPrice(){return totalPrice;}
   public String getEmail(){return email;}
   public String getCardNumber(){return cardNumber;}
-  public String getAuthorized(){return authorized;}
-  public int getRequestType(){return requestType;} //Type 1 is request order, Type 2 is create account request order Type 3, is update credit card request order
+  public String getAuthorized(){return authorized;} 
+  public int getRequestType(){return requestType;} 
   public String getConfirmation(){return confirmation;}
 }

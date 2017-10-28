@@ -12,6 +12,6 @@
         <title>Quit JSP Page</title>
     </head>
     <body>
-        <h1>Thank You For Shopping With Us!</h1>
+        <h1>Thank You For Shopping With Us!</h1> <%--When user cancels order request they are sent to this page --%>
     </body>
 </html>

@@ -11,6 +11,7 @@ package orderrequest;
  */
 public class EmailServerInterface {
     String email;
+    //received email from user
     public void emailConfirmation(String custEmail){
        
         email = custEmail;

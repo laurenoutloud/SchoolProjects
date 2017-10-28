@@ -10,6 +10,8 @@ package orderrequest;
  * @author Lauren
  */
 import java.sql.*;
+
+//stores order information and adds order to database
 public class DeliveryOrder {
     private String accountId;
     private String item;
@@ -18,6 +20,7 @@ public class DeliveryOrder {
     private int authorizationNumber;
     private String confirmation;
     
+    //stores order information and adds order to database
     public String createOrder(String accId, String itemType, int quant, int totPrice, int authorizationNo){
         accountId = accId;
         item = itemType;
@@ -25,6 +28,7 @@ public class DeliveryOrder {
         totalPrice = totPrice;
         authorizationNumber = authorizationNo;
         
+        //Create order confirmation string
         confirmation = "Account Id: " + accountId + "<br>" +
                         "Item: " + item + "<br>" +
                         "Quantity: " + quantity + "<br>" +
@@ -57,7 +61,7 @@ public class DeliveryOrder {
             return confirmation;
             }
             }
-            
+            //If the user previously had an account and previously had an order, instead of creating a new order this updates the row of the previous order to the new one
             String query = "INSERT INTO delivery_order(account_id, item, quantity, total_price, authorization_no) VALUES (?,?,?,?,?)";
             PreparedStatement ps=con.prepareStatement(query);
             ps.setString(1, accountId);
@@ -78,7 +82,7 @@ public class DeliveryOrder {
         }
         
         
-        
+        //return order confirmation
         return confirmation;
         
     }

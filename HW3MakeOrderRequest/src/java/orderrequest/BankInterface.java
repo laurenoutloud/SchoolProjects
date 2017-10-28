@@ -15,5 +15,8 @@ package orderrequest;
 
 public class BankInterface {
    
-    public void authorize(int cardNo){} 
+    public void authorize(String cardNo){
+        //because writing logic for the bank was not part of this assignment, I used bank.jsp and bankprocess.jsp to simulate bank interface/logic 
+    
+    } 
 }

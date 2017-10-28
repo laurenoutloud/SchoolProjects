@@ -4,8 +4,7 @@
     Author     : Lauren
 --%>
 
-<%@page import="orderrequest.EmailServerInterface" %>
-<jsp:useBean id="orderrequest" class="orderrequest.OrderRequestBean" scope="session"/>
+<jsp:useBean id="orderrequest" class="orderrequest.OrderRequestBean" scope="session"/> <%-- use javabean object to get order confirmation --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,14 +16,9 @@
         <h1>Email Confirmation</h1>
         <p> Thank you for your order. An email confirmation has been sent to <%out.println(orderrequest.getEmail()); %> </p>
         <b>Order Confirmation </b> <br>
-            <% 
-                out.println(orderrequest.getConfirmation());
-                  
-                EmailServerInterface emailInt = new EmailServerInterface();
-                
-                emailInt.emailConfirmation(orderrequest.getEmail());
             
-            %>
+        <%--Print out order confirmation --%>
+        <%   out.println(orderrequest.getConfirmation()); %>
              
          
          <br />
